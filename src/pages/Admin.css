@@ -1,0 +1,76 @@
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.admin-header {
+  margin: 2rem 0 1.5rem 0;
+  color: var(--color-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.admin-stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.admin-card {
+  background: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  color: var(--color-text);
+  backdrop-filter: var(--color-card-blur);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 12px 36px 0 rgba(162, 64, 255, 0.18);
+  background: rgba(162, 64, 255, 0.10);
+}
+
+.admin-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.admin-card-value {
+  color: var(--color-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.loading-message, .error-message {
+  color: var(--color-muted);
+  font-size: 1.1rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .admin-stats {
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+  }
+  .admin-card {
+    min-width: 180px;
+    padding: 1.2rem 1rem 1rem 1rem;
+  }
+} 
