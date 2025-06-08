@@ -1,39 +1,74 @@
-import { useState, useEffect } from 'react';
-import api from '../services/api';
+import { useEffect, useState } from 'react';
+import BookService from '../../services/book-service'; // Importa el servicio
 
-export const BookList = () => {
-  const [books, setBooks] = useState([]);
+const BookList = () => {
+    const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const response = await api.get('/books');
-        setBooks(response.data);
-      } catch (error) {
-        console.error('Error al cargar libros:', error);
-      }
+    // Carga inicial de libros
+    useEffect(() => {
+        const fetchBooks = async () => {
+            try {
+                const response = await BookService.getAll(); // Usa el servicio
+                setBooks(response.data);
+            } catch (error) {
+                console.error('Error al cargar libros:', error);
+                alert('Error al cargar libros'); // Feedback al usuario
+            }
+        };
+        fetchBooks();
+    }, []);
+
+    // Eliminar libro
+    const handleDelete = async (id) => {
+        if (!window.confirm('¿Eliminar este libro permanentemente?')) return;
+        
+        try {
+            await BookService.delete(id); // Usa el servicio
+            setBooks(books.filter(book => book.id !== id));
+            alert('Libro eliminado');
+        } catch (error) {
+            console.error('Error al eliminar libro:', error);
+            alert('No se pudo eliminar el libro');
+        }
     };
-    fetchBooks();
-  }, []);
 
-  const handleDelete = async (id) => {
-    try {
-      await api.delete(`/books/${id}`);
-      setBooks(books.filter(book => book.id !== id));
-    } catch (error) {
-      console.error('Error al eliminar libro:', error);
-    }
-  };
-
-  return (
-    <div>
-      {books.map((book) => (
-        <div key={book.id}>
-          <h3>{book.title}</h3>
-          <p>{book.author}</p>
-          <button onClick={() => handleDelete(book.id)}>Eliminar</button>
+    return (
+        <div style={{ padding: '20px' }}>
+            <h2>Listado de Libros</h2>
+            {books.length === 0 ? (
+                <p>No hay libros disponibles</p>
+            ) : (
+                books.map((book) => (
+                    <div 
+                        key={book.id} 
+                        style={{ 
+                            border: '1px solid #ddd', 
+                            padding: '10px', 
+                            marginBottom: '10px',
+                            borderRadius: '4px'
+                        }}
+                    >
+                        <h3>{book.title}</h3>
+                        <p>Autor: {book.author}</p>
+                        <p>ISBN: {book.isbn || 'N/A'}</p>
+                        <button 
+                            onClick={() => handleDelete(book.id)}
+                            style={{
+                                backgroundColor: '#ff4444',
+                                color: 'white',
+                                border: 'none',
+                                padding: '5px 10px',
+                                borderRadius: '3px',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            Eliminar
+                        </button>
+                    </div>
+                ))
+            )}
         </div>
-      ))}
-    </div>
-  );
+    );
 };
+
+export default BookList;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const BookForm = ({ onSubmit, initialData = {} }) => {
+const BookForm = ({ onSubmit, initialData = {} }) => {
   const [formData, setFormData] = useState({
     title: initialData.title || '',
     author: initialData.author || '',
@@ -35,3 +35,5 @@ export const BookForm = ({ onSubmit, initialData = {} }) => {
     </form>
   );
 };
+
+export default BookForm;
