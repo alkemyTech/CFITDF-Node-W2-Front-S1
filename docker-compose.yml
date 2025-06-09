@@ -1,0 +1,21 @@
+services:
+  node-squad1:
+    image: node-squad1:${IMAGE_TAG:-latest}
+    container_name: ${APP_NAME:-node-squad1}
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: ${APP_ENV:-staging}
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT:-0}:${SERVER_PORT:-3000}
+    environment:
+      - APP_NAME=${APP_NAME:-node-squad1}
+      # - NODE_ENV=${NODE_ENV:-production}
+      - DB_HOST=${DB_HOST:-host.docker.internal}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_NAME=${DB_NAME:-mydb}
+      - DB_USER=${DB_USER:-dbuser}
+      - DB_PASSWORD=${DB_PASSWORD:-xXx}
+      - SECRET_KEY_JWT=${SECRET_KEY_JWT:-xXx}      
+
