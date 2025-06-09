@@ -48,15 +48,15 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
-      <div className="register-card">
-        <h2>Registro de Usuario</h2>
-        
-        {error && <div className="error-message">{error}</div>}
-        
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="nombre">Nombre</label>
+    <div className="register-background">
+      <div className="register-card-modern">
+        <div className="register-logo">
+          <span role="img" aria-label="logo">⚡</span>
+        </div>
+        <div className="register-title">Crear una cuenta</div>
+        {error && <div className="register-error">{error}</div>}
+        <form className="register-form-modern" onSubmit={handleSubmit} autoComplete="off">
+          <div className="register-textbox">
             <input
               type="text"
               id="nombre"
@@ -64,11 +64,12 @@ const Register = () => {
               value={formData.nombre}
               onChange={handleChange}
               required
+              placeholder=" "
+              autoComplete="off"
             />
+            <label htmlFor="nombre">Nombre</label>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
+          <div className="register-textbox">
             <input
               type="email"
               id="email"
@@ -76,11 +77,12 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              placeholder=" "
+              autoComplete="off"
             />
+            <label htmlFor="email">Email</label>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Contraseña</label>
+          <div className="register-textbox">
             <input
               type="password"
               id="password"
@@ -89,11 +91,12 @@ const Register = () => {
               onChange={handleChange}
               required
               minLength="6"
+              placeholder=" "
+              autoComplete="new-password"
             />
+            <label htmlFor="password">Contraseña</label>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+          <div className="register-textbox">
             <input
               type="password"
               id="confirmPassword"
@@ -102,21 +105,30 @@ const Register = () => {
               onChange={handleChange}
               required
               minLength="6"
+              placeholder=" "
+              autoComplete="new-password"
             />
+            <label htmlFor="confirmPassword">Confirmar Contraseña</label>
           </div>
-
           <button 
             type="submit" 
-            className="submit-button"
+            className="register-btn-modern"
             disabled={loading}
           >
             {loading ? 'Registrando...' : 'Registrarse'}
           </button>
+          <button
+            type="button"
+            className="login-home-btn"
+            onClick={() => navigate('/')}
+            style={{ marginTop: '10px' }}
+          >
+            Volver al Home
+          </button>
         </form>
-
-        <p className="login-link">
+        <div className="register-footer">
           ¿Ya tienes una cuenta? <a href="/login">Iniciar Sesión</a>
-        </p>
+        </div>
       </div>
     </div>
   );
