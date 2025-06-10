@@ -6,10 +6,9 @@ RUN rm -rf /tmp/* /var/cache/apk/*
 WORKDIR /app
 COPY package.json /app/
 RUN npm install --unsafe-perm && npm cache clean --force
-RUN npm install -g sequelize-cli
 
 FROM base AS dev
-
+RUN npm install -g vercel
 
 CMD [ "tail", "-f", "/dev/null" ]
 
