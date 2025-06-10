@@ -32,8 +32,8 @@ export const userService = {
   },
 
   // Obtener el perfil del usuario actual
-  getCurrentUser: async (id) => {
-    const response = await api.get(`/users/${id}`);
+  getCurrentUser: async () => {
+    const response = await api.get('/users/me');
     return response.data;
   }
 }; 

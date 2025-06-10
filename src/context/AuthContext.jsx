@@ -26,9 +26,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = (userData, token) => {
-    localStorage.setItem('token', token);
-    setUser(userData);
+  const login = (userData) => {
+    if (userData.user && userData.user.password) {
+      localStorage.setItem('token', userData.user.password);
+    }
+    if (userData.user) {
+      setUser(userData.user);
+    } else {
+      setUser(userData);
+    }
   };
 
   const logout = () => {
@@ -42,7 +48,10 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     isAuthenticated: !!user,
-    isAdmin: user?.rol === 'administrador'
+    isAdmin:
+      user?.id_rol === 1 ||
+      user?.rol === "administrador" ||
+      user?.nombre_rol === "administrador"
   };
 
   return (
@@ -58,4 +67,13 @@ export const useAuth = () => {
     throw new Error('useAuth debe ser usado dentro de un AuthProvider');
   }
   return context;
+};
+
+// Middleware para leer el token en el header de autorización
+export const authMiddleware = (config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 }; 

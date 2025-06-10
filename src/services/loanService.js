@@ -31,9 +31,9 @@ export const loanService = {
     return response.data;
   },
 
-  // Obtener historial de préstamos del usuario actual
+  // Obtener préstamos vencidos del usuario actual (usado como historial)
   getLoanHistory: async () => {
-    const response = await api.get('/loans/historial');
+    const response = await api.get('/loans/overdue');
     return response.data;
   }
 }; 

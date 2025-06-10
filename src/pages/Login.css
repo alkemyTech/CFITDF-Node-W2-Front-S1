@@ -29,6 +29,7 @@ body {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   padding: 72px 32px 58px 32px;
   width: 380px;
+  max-width: 95vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +37,7 @@ body {
   text-align: center;
   color: #f9f8fa;
   backdrop-filter: blur(38px);
-  margin-top: 2.5rem;
+  margin-top: 7rem;
 }
 
 .login-logo {
@@ -199,5 +200,23 @@ body {
 .login-home-btn:hover {
   background: var(--color-primary);
   color: #fff;
+}
+
+@media (max-width: 700px) {
+  .login-card-modern {
+    width: 98vw;
+    max-width: 98vw;
+    padding: 32px 8px 24px 8px;
+    margin-top: 7rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-card-modern {
+    width: 98vw;
+    max-width: 98vw;
+    padding: 32px 8px 24px 8px;
+    margin-top: 4.5rem;
+  }
 } 
 

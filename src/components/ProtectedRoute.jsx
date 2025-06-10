@@ -9,7 +9,19 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (requiredRole && user.rol !== requiredRole) {
+  if (
+    requiredRole &&
+    !(
+      (requiredRole === "administrador" &&
+        (user.id_rol === 1 ||
+          user.rol === "administrador" ||
+          user.nombre_rol === "administrador")) ||
+      (requiredRole === "cliente" &&
+        (user.id_rol === 2 ||
+          user.rol === "cliente" ||
+          user.nombre_rol === "cliente"))
+    )
+  ) {
     return <Navigate to="/unauthorized" replace />;
   }
 
