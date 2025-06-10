@@ -65,10 +65,10 @@ const Usuarios = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (selectedUser && selectedUser.id) {
-        await userService.updateUser(selectedUser.id, formData);
-      } else if (selectedUser && selectedUser._id) {
-        await userService.updateUser(selectedUser._id, formData);
+      let dataToSend = { ...formData };
+      if (selectedUser && selectedUser.id_usuario) {
+        delete dataToSend.dni;
+        await userService.updateUser(selectedUser.id_usuario, dataToSend);
       } else {
         await userService.createUser(formData);
       }
@@ -85,6 +85,17 @@ const Usuarios = () => {
       ...prev,
       [name]: name === 'dni' || name === 'id_rol' ? Number(value) : value
     }));
+  };
+
+  const handleDelete = async (id_usuario) => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+      try {
+        await userService.deleteUser(id_usuario);
+        loadUsers();
+      } catch (err) {
+        setError('Error al eliminar el usuario');
+      }
+    }
   };
 
   if (loading) {
@@ -104,9 +115,9 @@ const Usuarios = () => {
       </div>
 
       <div className="users-grid">
-        {users.map(user => (
-          <div key={user.id || user._id} className="user-card">
-            <h3>{user.nombre}</h3>
+        {users.map((user, idx) => (
+          <div key={user.id || user._id || idx} className="user-card">
+            <h3>{user.nombres} {user.apellidos}</h3>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Rol:</strong> {user.id_rol === 1 ? 'Administrador' : 'Cliente'}</p>
             <div className="user-actions">
@@ -115,6 +126,13 @@ const Usuarios = () => {
                 onClick={() => handleEdit(user)}
               >
                 Editar
+              </button>
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(user.id_usuario)}
+                style={{ marginLeft: '8px', background: '#ff3b3b', color: '#fff' }}
+              >
+                Eliminar
               </button>
             </div>
           </div>
@@ -137,6 +155,7 @@ const Usuarios = () => {
                   required
                   min="1000000"
                   placeholder="DNI (mínimo 7 dígitos)"
+                  readOnly={!!selectedUser}
                 />
               </div>
               <div className="form-group">
